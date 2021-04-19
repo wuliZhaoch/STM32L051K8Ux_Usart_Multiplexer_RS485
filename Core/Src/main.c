@@ -2,6 +2,15 @@
 
 uint32_t main_loop = 0;
 
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    if (htim == &htim6)
+    {
+        HAL_GPIO_TogglePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin);
+    }
+
+}
+
 int main(void)
 {
 
@@ -24,9 +33,9 @@ int main(void)
         printf("System Mainloop is: %ld\r\n", main_loop);
         main_loop++;
         HAL_Delay_us(1000000);
-        HAL_Delay_ms(1000);
-        HAL_Delay(1000);
-        HAL_GPIO_TogglePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin);
+//        HAL_Delay_ms(1000);
+//        HAL_Delay(1000);
+//        HAL_GPIO_TogglePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin);
 
 
     }

@@ -49,6 +49,7 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, SGM4581_Addr_A_Pin|SGM4581_Addr_B_Pin|SGM4581_Addr_C_Pin|SYSTEM_LED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, SYSTEM_LED_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, Debug_GPIO1_Pin|Debug_GPIO2_Pin|Debug_GPIO3_Pin|Debug_GPIO4_Pin, GPIO_PIN_RESET);
