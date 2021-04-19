@@ -3,6 +3,8 @@
 #include "system.h"
 #include "main.h"
 
+#define SYSTEMCLK  32   // 32MHz
+
 void HAL_Delay_init(void);
 void HAL_Delay_ms(uint16_t nms);
 void HAL_Delay_us(uint32_t nus);

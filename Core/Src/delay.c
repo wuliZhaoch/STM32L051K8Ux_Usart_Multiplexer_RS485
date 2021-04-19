@@ -80,7 +80,7 @@ void HAL_Delay_init(void)
 	u32 reload;
 #endif
     HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
-	fac_us=168;
+	fac_us = SYSTEMCLK;
 #if SYSTEM_SUPPORT_OS
 	reload=SYSCLK;
 	reload*=1000000/delay_ostickspersec;

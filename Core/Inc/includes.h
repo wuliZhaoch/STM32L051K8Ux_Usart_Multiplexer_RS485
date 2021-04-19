@@ -20,12 +20,10 @@
 
 #include "chip_id.h"
 
-#include "chip_eeprom.h"
-
 #include "i2c.h"
 
-#include "bmx160.h"
-
 #include "delay.h"
+
+#include "tim.h"
 
 #endif /* INCLUDES_H_ */
