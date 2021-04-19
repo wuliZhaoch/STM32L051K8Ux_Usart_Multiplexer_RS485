@@ -29,6 +29,59 @@
 /*----------------------------------------------------------------------------*/
 /* USER CODE BEGIN 1 */
 
+void SGM4581_Address_set(SGM4581_SelectInputTypeDef Addr_Flag)
+{
+    switch(Addr_Flag)
+    {
+    case Select_Address_x0:
+        SELECT_INT_A_RESET;
+        SELECT_INT_B_RESET;
+        SELECT_INT_C_RESET;
+        break;
+    case Select_Address_x1:
+        SELECT_INT_A_SET;
+        SELECT_INT_B_RESET;
+        SELECT_INT_C_RESET;
+        break;
+    case Select_Address_x2:
+        SELECT_INT_A_RESET;
+        SELECT_INT_B_SET;
+        SELECT_INT_C_RESET;
+        break;
+    case Select_Address_x3:
+        SELECT_INT_A_SET;
+        SELECT_INT_B_SET;
+        SELECT_INT_C_RESET;
+        break;
+    case Select_Address_x4:
+        SELECT_INT_A_RESET;
+        SELECT_INT_B_RESET;
+        SELECT_INT_C_SET;
+        break;
+    case Select_Address_x5:
+        SELECT_INT_A_SET;
+        SELECT_INT_B_RESET;
+        SELECT_INT_C_SET;
+        break;
+    case Select_Address_x6:
+        SELECT_INT_A_RESET;
+        SELECT_INT_B_SET;
+        SELECT_INT_C_SET;
+        break;
+    case Select_Address_x7:
+        SELECT_INT_A_SET;
+        SELECT_INT_B_SET;
+        SELECT_INT_C_SET;
+        break;
+    default:
+        SELECT_INT_A_RESET;
+        SELECT_INT_B_RESET;
+        SELECT_INT_C_RESET;
+        break;
+    }
+
+}
+
 /* USER CODE END 1 */
 
 /** Configure pins as

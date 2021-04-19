@@ -32,13 +32,33 @@ extern "C" {
 /* USER CODE END Includes */
 
 /* USER CODE BEGIN Private defines */
+typedef enum {
+    Select_Address_x0 = 0x00,
+    Select_Address_x1 = 0x01,
+    Select_Address_x2 = 0x02,
+    Select_Address_x3 = 0x03,
+    Select_Address_x4 = 0x04,
+    Select_Address_x5 = 0x05,
+    Select_Address_x6 = 0x06,
+    Select_Address_x7 = 0x07
+} SGM4581_SelectInputTypeDef;
+
+#define SELECT_INT_A_SET    HAL_GPIO_WritePin(SGM4581_Addr_A_GPIO_Port, SGM4581_Addr_A_Pin, GPIO_PIN_SET)
+#define SELECT_INT_A_RESET  HAL_GPIO_WritePin(SGM4581_Addr_A_GPIO_Port, SGM4581_Addr_A_Pin, GPIO_PIN_RESET)
+
+#define SELECT_INT_B_SET    HAL_GPIO_WritePin(SGM4581_Addr_B_GPIO_Port, SGM4581_Addr_B_Pin, GPIO_PIN_SET)
+#define SELECT_INT_B_RESET  HAL_GPIO_WritePin(SGM4581_Addr_B_GPIO_Port, SGM4581_Addr_B_Pin, GPIO_PIN_RESET)
+
+#define SELECT_INT_C_SET    HAL_GPIO_WritePin(SGM4581_Addr_C_GPIO_Port, SGM4581_Addr_C_Pin, GPIO_PIN_SET)
+#define SELECT_INT_C_RESET  HAL_GPIO_WritePin(SGM4581_Addr_C_GPIO_Port, SGM4581_Addr_C_Pin, GPIO_PIN_RESET)
+
 
 /* USER CODE END Private defines */
 
 void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+void SGM4581_Address_set(SGM4581_SelectInputTypeDef Addr_Flag);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

@@ -27,6 +27,7 @@ int main(void)
     MX_I2C1_Init();
     MX_TIM6_Init();
 
+    SGM4581_Address_set(Select_Address_x7);
     while (1)
     {
 
