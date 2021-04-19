@@ -2,6 +2,8 @@
 
 uint32_t main_loop = 0;
 
+uint8_t RS485_Send_buffer[5] = {0};
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim == &htim6)
@@ -30,6 +32,7 @@ int main(void)
     SGM4581_Address_set(Select_Address_x7);
     while (1)
     {
+
 
         printf("System Mainloop is: %ld\r\n", main_loop);
         main_loop++;
