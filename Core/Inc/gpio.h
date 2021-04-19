@@ -61,6 +61,7 @@ void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 void SGM4581_Address_set(SGM4581_SelectInputTypeDef Addr_Flag);
+void System_LED_Blink(uint16_t blinkCount, uint32_t period);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

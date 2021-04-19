@@ -131,7 +131,15 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
-
+void System_LED_Blink(uint16_t blinkCount, uint32_t period)
+{
+    for (int i = 0; i < blinkCount; i++)
+    {
+        HAL_GPIO_TogglePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin);
+        HAL_Delay(period);
+    }
+    HAL_GPIO_WritePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin, GPIO_PIN_SET);
+}
 /* USER CODE END 2 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
