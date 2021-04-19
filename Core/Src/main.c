@@ -31,20 +31,20 @@ int main(void)
 
     SGM4581_Address_set(Select_Address_x7);
 
-    HAL_GPIO_WritePin(GPIOA, RS485_REDE_Pin, GPIO_PIN_SET);
-    HAL_UART_Transmit(&huart1, RS485_Send_buffer, 5, 1000);
-    HAL_Delay(500);
-    HAL_GPIO_WritePin(GPIOA, RS485_REDE_Pin, GPIO_PIN_RESET);
+
+
     while (1)
     {
+
+        HAL_GPIO_WritePin(GPIOA, RS485_REDE_Pin, GPIO_PIN_SET);
+        HAL_UART_Transmit(&huart1, RS485_Send_buffer, 5, 1000);
+        HAL_Delay(500);
+        HAL_GPIO_WritePin(GPIOA, RS485_REDE_Pin, GPIO_PIN_RESET);
 
 
         printf("System Mainloop is: %ld\r\n", main_loop);
         main_loop++;
         HAL_Delay_us(1000000);
-//        HAL_Delay_ms(1000);
-//        HAL_Delay(1000);
-//        HAL_GPIO_TogglePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin);
 
 
     }
