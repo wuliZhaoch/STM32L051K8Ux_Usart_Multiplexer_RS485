@@ -8,7 +8,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim == &htim6)
     {
-//        HAL_GPIO_TogglePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin);
+        HAL_GPIO_TogglePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin);
     }
 }
 
@@ -40,17 +40,9 @@ int main(void)
     while (1)
     {
 
-//        RS485_TRANSMIT_MODE;
-//        System_LED_Blink(10, 100);
-//        HAL_UART_Transmit(&huart1, RS485_Send_buffer, 5, 1000);
-//        HAL_Delay(200);
-//        RS485_RECEIVE_MODE;
-
         printf("System Mainloop is: %ld\r\n", main_loop);
         main_loop++;
         HAL_Delay_us(1000000);
-
-
     }
 
 }
