@@ -26,4 +26,6 @@
 
 #include "tim.h"
 
+#include "crc.h"
+
 #endif /* INCLUDES_H_ */
