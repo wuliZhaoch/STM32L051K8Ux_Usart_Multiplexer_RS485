@@ -52,6 +52,8 @@ typedef enum {
 #define SELECT_INT_C_SET    HAL_GPIO_WritePin(SGM4581_Addr_C_GPIO_Port, SGM4581_Addr_C_Pin, GPIO_PIN_SET)
 #define SELECT_INT_C_RESET  HAL_GPIO_WritePin(SGM4581_Addr_C_GPIO_Port, SGM4581_Addr_C_Pin, GPIO_PIN_RESET)
 
+#define RS485_TRANSMIT_MODE     HAL_GPIO_WritePin(GPIOA, RS485_REDE_Pin, GPIO_PIN_SET)
+#define RS485_RECEIVE_MODE      HAL_GPIO_WritePin(GPIOA, RS485_REDE_Pin, GPIO_PIN_RESET)
 
 /* USER CODE END Private defines */
 
@@ -59,6 +61,7 @@ void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 void SGM4581_Address_set(SGM4581_SelectInputTypeDef Addr_Flag);
+void System_LED_Blink(uint16_t blinkCount, uint32_t period);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
