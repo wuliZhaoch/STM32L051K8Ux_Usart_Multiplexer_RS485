@@ -39,6 +39,9 @@ DMA_HandleTypeDef hdma_usart1_tx;
 DMA_HandleTypeDef hdma_usart2_rx;
 DMA_HandleTypeDef hdma_usart2_tx;
 
+Usart_ReceiveTypeDef USART1_ReceiveDef;
+Usart_ReceiveTypeDef USART2_ReceiveDef;
+
 /* USART1 init function */
 
 void MX_USART1_UART_Init(void)
@@ -61,11 +64,28 @@ void MX_USART1_UART_Init(void)
   huart1.Init.OverSampling = UART_OVERSAMPLING_16;
   huart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
   huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  if (HAL_RS485Ex_Init(&huart1, UART_DE_POLARITY_HIGH, 0, 0) != HAL_OK)
+  if (HAL_UART_Init(&huart1) != HAL_OK)
   {
     Error_Handler();
   }
   /* USER CODE BEGIN USART1_Init 2 */
+
+  /* Clear IDLE Flag */
+  if (__HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE) != RESET)
+  {
+    __HAL_UART_CLEAR_IDLEFLAG(&huart1);
+  }
+
+//  HAL_Delay(10);
+  /* DMA receives data */
+  if (HAL_UART_Receive_DMA(&huart1, USART1_ReceiveDef.Receive_pData, RECEIVE_LEN) != HAL_OK)
+  {
+      Error_Handler();
+  }
+
+  HAL_Delay(10);
+  /* Enable IDLE interrupt */
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
 
   /* USER CODE END USART1_Init 2 */
 
@@ -97,6 +117,22 @@ void MX_USART2_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART2_Init 2 */
+
+  if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_IDLE) != RESET)
+  {
+    __HAL_UART_CLEAR_IDLEFLAG(&huart2);
+  }
+
+  HAL_Delay(10);
+  /* DMA receives data */
+  if (HAL_UART_Receive_DMA(&huart2, USART2_ReceiveDef.Receive_pData, RECEIVE_LEN) != HAL_OK)
+  {
+      Error_Handler();
+  }
+
+  HAL_Delay(10);
+  /* Enable IDLE interrupt */
+  __HAL_UART_ENABLE_IT(&huart2, UART_IT_IDLE);
 
   /* USER CODE END USART2_Init 2 */
 

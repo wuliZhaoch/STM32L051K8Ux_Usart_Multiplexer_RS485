@@ -42,7 +42,16 @@ void MX_USART1_UART_Init(void);
 void MX_USART2_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
+#define RECEIVE_LEN     255
 
+typedef struct {
+    uint8_t     Receive_Flag:1;     // IDLE Receive Flag
+    uint16_t    Receive_LEN;        // Receive Length
+    uint8_t     Receive_pData[RECEIVE_LEN];
+}Usart_ReceiveTypeDef;
+
+extern Usart_ReceiveTypeDef USART1_ReceiveDef;
+extern Usart_ReceiveTypeDef USART2_ReceiveDef;
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

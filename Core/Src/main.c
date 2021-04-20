@@ -33,18 +33,18 @@ int main(void)
     MX_I2C1_Init();         // System IIC Initialize
     MX_TIM6_Init();         // System Timer Initialize (1S)
 
-    SGM4581_Address_set(Select_Address_x7);     // Set up channel 7 to receive data
+//    SGM4581_Address_set(Select_Address_x7);     // Set up channel 7 to receive data
 
 
 
     while (1)
     {
 
-        RS485_TRANSMIT_MODE;
-        System_LED_Blink(10, 100);
-        HAL_UART_Transmit(&huart1, RS485_Send_buffer, 5, 1000);
-        HAL_Delay(200);
-        RS485_RECEIVE_MODE;
+//        RS485_TRANSMIT_MODE;
+//        System_LED_Blink(10, 100);
+//        HAL_UART_Transmit(&huart1, RS485_Send_buffer, 5, 1000);
+//        HAL_Delay(200);
+//        RS485_RECEIVE_MODE;
 
         printf("System Mainloop is: %ld\r\n", main_loop);
         main_loop++;
