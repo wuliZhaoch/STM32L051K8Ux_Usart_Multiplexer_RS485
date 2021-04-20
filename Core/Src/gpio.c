@@ -29,6 +29,11 @@
 /*----------------------------------------------------------------------------*/
 /* USER CODE BEGIN 1 */
 
+/**
+  * @brief  SGM4581 Address Select.
+  * @param  Addr_Flag Address Flag Select
+  * @retval None
+  */
 void SGM4581_Address_set(SGM4581_SelectInputTypeDef Addr_Flag)
 {
     switch(Addr_Flag)

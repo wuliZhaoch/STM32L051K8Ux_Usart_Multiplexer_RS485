@@ -9,6 +9,11 @@
 
 ChipIDTypeDef SystemChipID;
 
+/**
+  * @brief  GET Chip ID.
+  * @param  CHIPID   The chipidTypeDeff type is passed in as an argument
+  * @retval None
+  */
 void GET_ChipID(ChipIDTypeDef *CHIPID)
 {
     CHIPID->Chip_ID_H = HAL_GetUIDw0();
@@ -16,7 +21,11 @@ void GET_ChipID(ChipIDTypeDef *CHIPID)
     CHIPID->Chip_ID_L = HAL_GetUIDw2();
 }
 
-
+/**
+  * @brief  GET System Chip ID.
+  * @param  None
+  * @retval None
+  */
 void System_GetChipID(void)
 {
     GET_ChipID(&SystemChipID);

@@ -7,6 +7,7 @@
  */
 #include "crc.h"
 
+/* CRC16 check by lookup table method */
 uint8_t auchCRCHi[256] =
 {
     0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0,
@@ -67,7 +68,12 @@ uint8_t auchCRCLo[256] =
     0x43, 0x83, 0x41, 0x81, 0x80, 0x40
 };
 
-
+/**
+  * @brief  GET CRC16 Check.
+  * @param  puchMsg     Data Check Buffer
+  * @param  usDataLen   Data Length
+  * @retval None
+  */
 uint16_t GetCRC16(uint8_t *puchMsg, uint16_t usDataLen)
 {
     uint8_t uchCRCHi = 0xFF ; /* 高CRC 字节初始化*/
