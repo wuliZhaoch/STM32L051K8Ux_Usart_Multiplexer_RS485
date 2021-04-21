@@ -238,10 +238,57 @@ void USART1_IRQHandler(void)
 void USART2_IRQHandler(void)
 {
   /* USER CODE BEGIN USART2_IRQn 0 */
+    uint32_t Counter = 0;
 
     if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_IDLE) != RESET)
     {
         __HAL_UART_CLEAR_IDLEFLAG(&huart2);
+        HAL_UART_DMAStop(&huart2);
+        Counter = __HAL_DMA_GET_COUNTER(&hdma_usart2_rx);
+        USART2_ReceiveDef.Receive_LEN = RECEIVE_LEN - Counter;
+        if (USART2_ReceiveDef.Receive_LEN > 0)
+        {
+            /* 超声波测距接收数据处理 Ultrasonic ranging receiving data processing */
+            if ((USART2_ReceiveDef.Receive_pData[0] == 0xFF)
+                    && ((uint8_t)(USART2_ReceiveDef.Receive_pData[0] + USART2_ReceiveDef.Receive_pData[1]
+                            + USART2_ReceiveDef.Receive_pData[2])
+                            == USART2_ReceiveDef.Receive_pData[3])) {
+                memset(&JSN_SR20_revDef.JSN_SR20_pData, 0, sizeof(JSN_SR20_revDef.JSN_SR20_pData));
+                JSN_SR20_revDef.JSN_SR20_LEN = USART2_ReceiveDef.Receive_LEN;
+
+                memcpy(JSN_SR20_revDef.JSN_SR20_pData, USART2_ReceiveDef.Receive_pData, JSN_SR20_revDef.JSN_SR20_LEN);
+            }
+
+            /* 光照强度接收数据处理 Light intensity receiving data processing */
+            if ((USART2_ReceiveDef.Receive_pData[0] == 0x4C)
+                    && (USART2_ReceiveDef.Receive_pData[1] == 0x3A)
+                    && (USART2_ReceiveDef.Receive_pData[USART2_ReceiveDef.Receive_LEN - 1] == 0x0A)
+                    && (USART2_ReceiveDef.Receive_pData[USART2_ReceiveDef.Receive_LEN - 2] == 0x0D)) {
+
+                memset(&GY301_revDef.GY301_pData, 0, sizeof(GY301_revDef.GY301_pData));
+                GY301_revDef.GY301_LEN = USART2_ReceiveDef.Receive_LEN;
+                memcpy(GY301_revDef.GY301_pData, USART2_ReceiveDef.Receive_pData, GY301_revDef.GY301_LEN);
+            }
+
+            /* 红外测距接收数据处理 Infrared ranging receiving data processing */
+            if ((USART2_ReceiveDef.Receive_pData[0] == 0x5A)
+                    && (USART2_ReceiveDef.Receive_pData[1] == 0x5A)
+                    && (USART2_ReceiveDef.Receive_pData[2] == 0x15)
+                    && (USART2_ReceiveDef.Receive_pData[3] == 0x03)
+                    && ((uint8_t) ((USART2_ReceiveDef.Receive_pData[0]
+                    + USART2_ReceiveDef.Receive_pData[1]
+                    + USART2_ReceiveDef.Receive_pData[2]
+                    + USART2_ReceiveDef.Receive_pData[3]
+                    + USART2_ReceiveDef.Receive_pData[4]
+                    + USART2_ReceiveDef.Receive_pData[5]
+                    + USART2_ReceiveDef.Receive_pData[6]))
+                    == USART2_ReceiveDef.Receive_pData[7])) {
+                memset(&GY53L1_revDef.GY53L1_pData, 0, sizeof(GY53L1_revDef.GY53L1_pData));
+                GY53L1_revDef.GY53L1_LEN = USART2_ReceiveDef.Receive_LEN;
+                memcpy(GY53L1_revDef.GY53L1_pData, USART2_ReceiveDef.Receive_pData, GY53L1_revDef.GY53L1_LEN);
+            }
+            memset(&USART2_ReceiveDef.Receive_pData, 0, sizeof(USART2_ReceiveDef.Receive_pData));
+        }
         HAL_UART_Receive_DMA(&huart2, USART2_ReceiveDef.Receive_pData, RECEIVE_LEN);
     }
   /* USER CODE END USART2_IRQn 0 */

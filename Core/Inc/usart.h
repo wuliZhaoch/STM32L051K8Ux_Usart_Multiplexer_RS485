@@ -29,6 +29,7 @@ extern "C" {
 
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
+#include "string.h"
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef huart1;
@@ -42,7 +43,11 @@ void MX_USART1_UART_Init(void);
 void MX_USART2_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-#define RECEIVE_LEN     255
+#define RECEIVE_LEN         255
+#define SR20_RECEIVE_LEN    4
+#define GY53L1_RECEIVE_LEN  8
+#define GY56_RECEIVE_LEN    8
+#define GY301_RECEIVE_LEN   11
 
 typedef struct {
     uint8_t     Receive_Flag:1;     // IDLE Receive Flag
@@ -50,8 +55,35 @@ typedef struct {
     uint8_t     Receive_pData[RECEIVE_LEN];
 }Usart_ReceiveTypeDef;
 
+
+typedef struct {
+    uint8_t     JSN_SR20_LEN;
+    uint8_t     JSN_SR20_pData[SR20_RECEIVE_LEN];
+}JSN_SR20ReceiveTypeDef;
+
+typedef struct {
+    uint8_t     GY53L1_LEN;
+    uint8_t     GY53L1_pData[GY53L1_RECEIVE_LEN];
+}GY53L1_ReceiveTypeDef;
+
+typedef struct {
+    uint8_t     GY56_LEN;
+    uint8_t     GY56_pData[GY56_RECEIVE_LEN];
+}GY56_ReceiveTypeDef;
+
+typedef struct {
+    uint8_t     GY301_LEN;
+    uint8_t     GY301_pData[GY301_RECEIVE_LEN];
+}GY301_ReceiveTypeDef;
+
+
+
 extern Usart_ReceiveTypeDef USART1_ReceiveDef;
 extern Usart_ReceiveTypeDef USART2_ReceiveDef;
+
+extern JSN_SR20ReceiveTypeDef JSN_SR20_revDef;
+extern GY301_ReceiveTypeDef GY301_revDef;
+extern GY53L1_ReceiveTypeDef GY53L1_revDef;
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

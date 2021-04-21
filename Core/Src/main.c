@@ -4,6 +4,11 @@ uint32_t main_loop = 0;
 
 uint8_t RS485_Send_buffer[5] = {0x12, 0x55, 0xff, 0x12, 0x55};
 
+uint8_t JSN_SR20_CMD = 0X55;
+uint8_t GY301_CMD = 0XAA;
+uint8_t GY53L1_Buf_CMD[3] = {0XA5, 0X15, 0XBA};
+uint8_t ODOA_Buff[2] = {0x0d,0x0a};
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim == &htim6)
@@ -39,10 +44,36 @@ int main(void)
 
     while (1)
     {
+        SGM4581_Address_set(Select_Address_x6);
+        HAL_Delay(100);
+        HAL_UART_Transmit(&huart2, GY53L1_Buf_CMD, 3, 200);
+        HAL_Delay(100);
 
-        printf("System Mainloop is: %ld\r\n", main_loop);
-        main_loop++;
-        HAL_Delay_us(1000000);
+        SGM4581_Address_set(Select_Address_x5);
+        HAL_Delay(100);
+        HAL_UART_Transmit(&huart2, &JSN_SR20_CMD, 1, 200);
+        HAL_Delay(100);
+
+        SGM4581_Address_set(Select_Address_x4);
+        HAL_Delay(100);
+        HAL_UART_Transmit(&huart2, &GY301_CMD, 1, 200);
+        HAL_Delay(100);
+
+
+        RS485_TRANSMIT_MODE;
+        HAL_Delay(10);
+        HAL_UART_Transmit(&huart1, GY53L1_revDef.GY53L1_pData, GY53L1_RECEIVE_LEN, 200);
+        HAL_Delay(100);
+
+        HAL_UART_Transmit(&huart1, JSN_SR20_revDef.JSN_SR20_pData, SR20_RECEIVE_LEN, 200);
+        HAL_Delay(100);
+
+        HAL_UART_Transmit(&huart1, GY301_revDef.GY301_pData, GY301_RECEIVE_LEN, 200);
+        HAL_Delay(100);
+        RS485_RECEIVE_MODE;
+
+        HAL_Delay(2000);
+
     }
 
 }

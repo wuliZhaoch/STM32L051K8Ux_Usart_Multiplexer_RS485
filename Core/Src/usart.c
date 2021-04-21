@@ -42,6 +42,10 @@ DMA_HandleTypeDef hdma_usart2_tx;
 Usart_ReceiveTypeDef USART1_ReceiveDef;
 Usart_ReceiveTypeDef USART2_ReceiveDef;
 
+JSN_SR20ReceiveTypeDef JSN_SR20_revDef;
+GY301_ReceiveTypeDef GY301_revDef;
+GY53L1_ReceiveTypeDef GY53L1_revDef;
+
 /* USART1 init function */
 
 void MX_USART1_UART_Init(void)
@@ -335,7 +339,7 @@ PUTCHAR_PROTOTYPE
 {
   /* Place your implementation of fputc here */
   /* e.g. write a character to the USART2 and Loop until the end of transmission */
-  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+  HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
 
   return ch;
 }
