@@ -48,12 +48,19 @@ void MX_USART2_UART_Init(void);
 #define GY53L1_RECEIVE_LEN  8
 #define GY56_RECEIVE_LEN    8
 #define GY301_RECEIVE_LEN   11
+#define RS485_SEND_LEN      100
 
 typedef struct {
     uint8_t     Receive_Flag:1;     // IDLE Receive Flag
     uint16_t    Receive_LEN;        // Receive Length
     uint8_t     Receive_pData[RECEIVE_LEN];
 }Usart_ReceiveTypeDef;
+
+
+typedef struct {
+    uint8_t     RS485_Send_LEN;
+    uint8_t     RS485_Send_pData[RS485_SEND_LEN];
+}UsartRS485_SendTypeDef;
 
 
 typedef struct {
