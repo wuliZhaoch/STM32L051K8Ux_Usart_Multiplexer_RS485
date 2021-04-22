@@ -248,15 +248,20 @@ void USART2_IRQHandler(void)
         USART2_ReceiveDef.Receive_LEN = RECEIVE_LEN - Counter;
         if (USART2_ReceiveDef.Receive_LEN > 0)
         {
+
             /* 超声波测距接收数据处理 Ultrasonic ranging receiving data processing */
             if ((USART2_ReceiveDef.Receive_pData[0] == 0xFF)
                     && ((uint8_t)(USART2_ReceiveDef.Receive_pData[0] + USART2_ReceiveDef.Receive_pData[1]
                             + USART2_ReceiveDef.Receive_pData[2])
                             == USART2_ReceiveDef.Receive_pData[3])) {
+
+                JSN_SR20_revDef.JSN_SR20_Flag = 1;
+
                 memset(&JSN_SR20_revDef.JSN_SR20_pData, 0, sizeof(JSN_SR20_revDef.JSN_SR20_pData));
                 JSN_SR20_revDef.JSN_SR20_LEN = USART2_ReceiveDef.Receive_LEN;
 
                 memcpy(JSN_SR20_revDef.JSN_SR20_pData, USART2_ReceiveDef.Receive_pData, JSN_SR20_revDef.JSN_SR20_LEN);
+
             }
 
             /* 光照强度接收数据处理 Light intensity receiving data processing */
@@ -265,9 +270,12 @@ void USART2_IRQHandler(void)
                     && (USART2_ReceiveDef.Receive_pData[USART2_ReceiveDef.Receive_LEN - 1] == 0x0A)
                     && (USART2_ReceiveDef.Receive_pData[USART2_ReceiveDef.Receive_LEN - 2] == 0x0D)) {
 
+                GY301_revDef.GY301_Flag = 1;
+
                 memset(&GY301_revDef.GY301_pData, 0, sizeof(GY301_revDef.GY301_pData));
                 GY301_revDef.GY301_LEN = USART2_ReceiveDef.Receive_LEN;
                 memcpy(GY301_revDef.GY301_pData, USART2_ReceiveDef.Receive_pData, GY301_revDef.GY301_LEN);
+
             }
 
             /* 红外测距接收数据处理 Infrared ranging receiving data processing */
@@ -283,10 +291,15 @@ void USART2_IRQHandler(void)
                     + USART2_ReceiveDef.Receive_pData[5]
                     + USART2_ReceiveDef.Receive_pData[6]))
                     == USART2_ReceiveDef.Receive_pData[7])) {
+
+                GY53L1_revDef.GY53L1_Flag = 1;
+
                 memset(&GY53L1_revDef.GY53L1_pData, 0, sizeof(GY53L1_revDef.GY53L1_pData));
                 GY53L1_revDef.GY53L1_LEN = USART2_ReceiveDef.Receive_LEN;
                 memcpy(GY53L1_revDef.GY53L1_pData, USART2_ReceiveDef.Receive_pData, GY53L1_revDef.GY53L1_LEN);
+
             }
+
             memset(&USART2_ReceiveDef.Receive_pData, 0, sizeof(USART2_ReceiveDef.Receive_pData));
         }
         HAL_UART_Receive_DMA(&huart2, USART2_ReceiveDef.Receive_pData, RECEIVE_LEN);

@@ -51,7 +51,7 @@ void MX_USART2_UART_Init(void);
 #define RS485_SEND_LEN      100
 
 typedef struct {
-    uint8_t     Receive_Flag:1;     // IDLE Receive Flag
+    uint8_t     Receive_Flag;     // IDLE Receive Flag
     uint16_t    Receive_LEN;        // Receive Length
     uint8_t     Receive_pData[RECEIVE_LEN];
 }Usart_ReceiveTypeDef;
@@ -64,25 +64,52 @@ typedef struct {
 
 
 typedef struct {
+    uint8_t     JSN_SR20_Flag;
     uint8_t     JSN_SR20_LEN;
     uint8_t     JSN_SR20_pData[SR20_RECEIVE_LEN];
 }JSN_SR20ReceiveTypeDef;
 
 typedef struct {
+    uint8_t     GY53L1_Flag;
     uint8_t     GY53L1_LEN;
     uint8_t     GY53L1_pData[GY53L1_RECEIVE_LEN];
 }GY53L1_ReceiveTypeDef;
 
 typedef struct {
+    uint8_t     GY56_Flag;
     uint8_t     GY56_LEN;
     uint8_t     GY56_pData[GY56_RECEIVE_LEN];
 }GY56_ReceiveTypeDef;
 
 typedef struct {
+    uint8_t     GY301_Flag;
     uint8_t     GY301_LEN;
     uint8_t     GY301_pData[GY301_RECEIVE_LEN];
 }GY301_ReceiveTypeDef;
 
+
+typedef struct {
+    uint8_t *channel_cmd0;
+    uint8_t *channel_cmd1;
+    uint8_t *channel_cmd2;
+    uint8_t *channel_cmd3;
+    uint8_t *channel_cmd4;
+    uint8_t *channel_cmd5;
+    uint8_t *channel_cmd6;
+    uint8_t *channel_cmd7;
+
+}Scan_SenserTypeDef;
+
+typedef struct {
+    uint8_t channel_cmd0_len;
+    uint8_t channel_cmd1_len;
+    uint8_t channel_cmd2_len;
+    uint8_t channel_cmd3_len;
+    uint8_t channel_cmd4_len;
+    uint8_t channel_cmd5_len;
+    uint8_t channel_cmd6_len;
+    uint8_t channel_cmd7_len;
+}Scan_SenserLengthTypeDef;
 
 
 extern Usart_ReceiveTypeDef USART1_ReceiveDef;
@@ -91,6 +118,9 @@ extern Usart_ReceiveTypeDef USART2_ReceiveDef;
 extern JSN_SR20ReceiveTypeDef JSN_SR20_revDef;
 extern GY301_ReceiveTypeDef GY301_revDef;
 extern GY53L1_ReceiveTypeDef GY53L1_revDef;
+
+extern Scan_SenserTypeDef SenserCMD;
+extern Scan_SenserLengthTypeDef SenserLEN;
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

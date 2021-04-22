@@ -78,11 +78,11 @@ void SGM4581_Address_set(SGM4581_SelectInputTypeDef Addr_Flag)
         SELECT_INT_B_SET;
         SELECT_INT_C_SET;
         break;
-    default:
-        SELECT_INT_A_RESET;
-        SELECT_INT_B_RESET;
-        SELECT_INT_C_RESET;
-        break;
+//    default:
+//        SELECT_INT_A_RESET;
+//        SELECT_INT_B_RESET;
+//        SELECT_INT_C_RESET;
+//        break;
     }
 
 }

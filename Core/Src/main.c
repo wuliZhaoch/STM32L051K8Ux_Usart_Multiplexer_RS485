@@ -1,12 +1,21 @@
 #include "includes.h"
 
+#define ADDRESS_DELAY   100
+#define CMD_DELAY       200
+
 uint32_t main_loop = 0;
 
 uint8_t RS485_Send_buffer[5] = {0x12, 0x55, 0xff, 0x12, 0x55};
 
-uint8_t JSN_SR20_CMD = 0X55;
-uint8_t GY301_CMD = 0XAA;
-uint8_t GY53L1_Buf_CMD[3] = {0XA5, 0X15, 0XBA};
+uint8_t JSN_SR20_Buf_CMD[1] = {0x55};               // JSN_SR20 Read Command
+uint8_t GY301_Buf_CMD[1] = {0xAA};                  // GY301 Read Command
+uint8_t GY53L1_Buf_CMD[3] = {0xA5, 0x15, 0xBA};     // GY53L1 Read Command
+uint8_t GY56_Buf_CMD[4] = {0xA5, 0x65, 0x02, 0x0C}; // GY56 Read Command
+
+
+
+
+
 uint8_t ODOA_Buff[2] = {0x0d,0x0a};
 
 uint8_t rs485_buf[23] = {0};
@@ -16,6 +25,263 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim == &htim6)
     {
         HAL_GPIO_TogglePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin);
+
+    }
+}
+
+
+void Scan_Sensor_config(uint8_t device_channel)
+{
+    switch(device_channel)
+    {
+        case Select_Address_x0:
+            SGM4581_Address_set(Select_Address_x0);
+            HAL_Delay(ADDRESS_DELAY);
+
+            HAL_UART_Transmit(&huart2, JSN_SR20_Buf_CMD, sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (JSN_SR20_revDef.JSN_SR20_Flag == 1)
+            {
+                JSN_SR20_revDef.JSN_SR20_Flag = 0;
+                SenserCMD.channel_cmd0 = JSN_SR20_Buf_CMD;
+                SenserLEN.channel_cmd0_len = sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY301_Buf_CMD, sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]), 200);
+            HAL_Delay(500);
+            if (GY301_revDef.GY301_Flag == 1)
+            {
+                GY301_revDef.GY301_Flag = 0;
+                SenserCMD.channel_cmd0 = GY301_Buf_CMD;
+                SenserLEN.channel_cmd0_len = sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY53L1_Buf_CMD, sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY53L1_revDef.GY53L1_Flag == 1)
+            {
+                GY53L1_revDef.GY53L1_Flag = 0;
+                SenserCMD.channel_cmd0 = GY53L1_Buf_CMD;
+                SenserLEN.channel_cmd0_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
+            }
+            break;
+        case Select_Address_x1:
+            SGM4581_Address_set(Select_Address_x1);
+            HAL_Delay(ADDRESS_DELAY);
+
+            HAL_UART_Transmit(&huart2, JSN_SR20_Buf_CMD, sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (JSN_SR20_revDef.JSN_SR20_Flag == 1)
+            {
+                JSN_SR20_revDef.JSN_SR20_Flag = 0;
+                SenserCMD.channel_cmd1 = JSN_SR20_Buf_CMD;
+                SenserLEN.channel_cmd1_len = sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY301_Buf_CMD, sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]), 200);
+            HAL_Delay(500);
+            if (GY301_revDef.GY301_Flag == 1)
+            {
+                GY301_revDef.GY301_Flag = 0;
+                SenserCMD.channel_cmd1 = GY301_Buf_CMD;
+                SenserLEN.channel_cmd1_len = sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY53L1_Buf_CMD, sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY53L1_revDef.GY53L1_Flag == 1)
+            {
+                GY53L1_revDef.GY53L1_Flag = 0;
+                SenserCMD.channel_cmd1 = GY53L1_Buf_CMD;
+                SenserLEN.channel_cmd1_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
+            }
+            break;
+        case Select_Address_x2:
+            SGM4581_Address_set(Select_Address_x2);
+            HAL_Delay(ADDRESS_DELAY);
+
+            HAL_UART_Transmit(&huart2, JSN_SR20_Buf_CMD, sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (JSN_SR20_revDef.JSN_SR20_Flag == 1)
+            {
+                JSN_SR20_revDef.JSN_SR20_Flag = 0;
+                SenserCMD.channel_cmd2 = JSN_SR20_Buf_CMD;
+                SenserLEN.channel_cmd2_len = sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY301_Buf_CMD, sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]), 200);
+            HAL_Delay(500);
+            if (GY301_revDef.GY301_Flag == 1)
+            {
+                GY301_revDef.GY301_Flag = 0;
+                SenserCMD.channel_cmd2 = GY301_Buf_CMD;
+                SenserLEN.channel_cmd2_len = sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY53L1_Buf_CMD, sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY53L1_revDef.GY53L1_Flag == 1)
+            {
+                GY53L1_revDef.GY53L1_Flag = 0;
+                SenserCMD.channel_cmd2 = GY53L1_Buf_CMD;
+                SenserLEN.channel_cmd2_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
+            }
+            break;
+        case Select_Address_x3:
+            SGM4581_Address_set(Select_Address_x3);
+            HAL_Delay(ADDRESS_DELAY);
+
+            HAL_UART_Transmit(&huart2, JSN_SR20_Buf_CMD, sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (JSN_SR20_revDef.JSN_SR20_Flag == 1)
+            {
+                JSN_SR20_revDef.JSN_SR20_Flag = 0;
+                SenserCMD.channel_cmd3 = JSN_SR20_Buf_CMD;
+                SenserLEN.channel_cmd3_len = sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY301_Buf_CMD, sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]), 200);
+            HAL_Delay(500);
+            if (GY301_revDef.GY301_Flag == 1)
+            {
+                GY301_revDef.GY301_Flag = 0;
+                SenserCMD.channel_cmd3 = GY301_Buf_CMD;
+                SenserLEN.channel_cmd3_len = sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY53L1_Buf_CMD, sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY53L1_revDef.GY53L1_Flag == 1)
+            {
+                GY53L1_revDef.GY53L1_Flag = 0;
+                SenserCMD.channel_cmd3 = GY53L1_Buf_CMD;
+                SenserLEN.channel_cmd3_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
+            }
+            break;
+        case Select_Address_x4:
+            SGM4581_Address_set(Select_Address_x4);
+            HAL_Delay(ADDRESS_DELAY);
+
+            HAL_UART_Transmit(&huart2, JSN_SR20_Buf_CMD, sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (JSN_SR20_revDef.JSN_SR20_Flag == 1)
+            {
+                JSN_SR20_revDef.JSN_SR20_Flag = 0;
+                SenserCMD.channel_cmd4 = JSN_SR20_Buf_CMD;
+                SenserLEN.channel_cmd4_len = sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY301_Buf_CMD, sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]), 200);
+            HAL_Delay(500);
+            if (GY301_revDef.GY301_Flag == 1)
+            {
+                GY301_revDef.GY301_Flag = 0;
+                SenserCMD.channel_cmd4 = GY301_Buf_CMD;
+                SenserLEN.channel_cmd4_len = sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY53L1_Buf_CMD, sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY53L1_revDef.GY53L1_Flag == 1)
+            {
+                GY53L1_revDef.GY53L1_Flag = 0;
+                SenserCMD.channel_cmd4 = GY53L1_Buf_CMD;
+                SenserLEN.channel_cmd4_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
+            }
+            break;
+        case Select_Address_x5:
+            SGM4581_Address_set(Select_Address_x5);
+            HAL_Delay(ADDRESS_DELAY);
+
+            HAL_UART_Transmit(&huart2, JSN_SR20_Buf_CMD, sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (JSN_SR20_revDef.JSN_SR20_Flag == 1)
+            {
+                JSN_SR20_revDef.JSN_SR20_Flag = 0;
+                SenserCMD.channel_cmd5 = JSN_SR20_Buf_CMD;
+                SenserLEN.channel_cmd5_len = sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY301_Buf_CMD, sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]), 200);
+            HAL_Delay(500);
+            if (GY301_revDef.GY301_Flag == 1)
+            {
+                GY301_revDef.GY301_Flag = 0;
+                SenserCMD.channel_cmd5 = GY301_Buf_CMD;
+                SenserLEN.channel_cmd5_len = sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY53L1_Buf_CMD, sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY53L1_revDef.GY53L1_Flag == 1)
+            {
+                GY53L1_revDef.GY53L1_Flag = 0;
+                SenserCMD.channel_cmd5 = GY53L1_Buf_CMD;
+                SenserLEN.channel_cmd5_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
+            }
+            break;
+        case Select_Address_x6:
+            SGM4581_Address_set(Select_Address_x6);
+            HAL_Delay(ADDRESS_DELAY);
+
+            HAL_UART_Transmit(&huart2, JSN_SR20_Buf_CMD, sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (JSN_SR20_revDef.JSN_SR20_Flag == 1)
+            {
+                JSN_SR20_revDef.JSN_SR20_Flag = 0;
+                SenserCMD.channel_cmd6 = JSN_SR20_Buf_CMD;
+                SenserLEN.channel_cmd6_len = sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY301_Buf_CMD, sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]), 200);
+            HAL_Delay(500);
+            if (GY301_revDef.GY301_Flag == 1)
+            {
+                GY301_revDef.GY301_Flag = 0;
+                SenserCMD.channel_cmd6 = GY301_Buf_CMD;
+                SenserLEN.channel_cmd6_len = sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY53L1_Buf_CMD, sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY53L1_revDef.GY53L1_Flag == 1)
+            {
+                GY53L1_revDef.GY53L1_Flag = 0;
+                SenserCMD.channel_cmd6 = GY53L1_Buf_CMD;
+                SenserLEN.channel_cmd6_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
+            }
+            break;
+        case Select_Address_x7:
+            SGM4581_Address_set(Select_Address_x7);
+            HAL_Delay(ADDRESS_DELAY);
+
+            HAL_UART_Transmit(&huart2, JSN_SR20_Buf_CMD, sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (JSN_SR20_revDef.JSN_SR20_Flag == 1)
+            {
+                JSN_SR20_revDef.JSN_SR20_Flag = 0;
+                SenserCMD.channel_cmd7 = JSN_SR20_Buf_CMD;
+                SenserLEN.channel_cmd7_len = sizeof(JSN_SR20_Buf_CMD)/sizeof(JSN_SR20_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY301_Buf_CMD, sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]), 200);
+            HAL_Delay(500);
+            if (GY301_revDef.GY301_Flag == 1)
+            {
+                GY301_revDef.GY301_Flag = 0;
+                SenserCMD.channel_cmd7 = GY301_Buf_CMD;
+                SenserLEN.channel_cmd7_len = sizeof(GY301_Buf_CMD)/sizeof(GY301_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY53L1_Buf_CMD, sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY53L1_revDef.GY53L1_Flag == 1)
+            {
+                GY53L1_revDef.GY53L1_Flag = 0;
+                SenserCMD.channel_cmd7 = GY53L1_Buf_CMD;
+                SenserLEN.channel_cmd7_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
+            }
+            break;
     }
 }
 
@@ -40,24 +306,55 @@ int main(void)
     MX_I2C1_Init();         // System IIC Initialize
     MX_TIM6_Init();         // System Timer Initialize (1S)
 
+    Scan_Sensor_config(Select_Address_x0);
+    Scan_Sensor_config(Select_Address_x1);
+    Scan_Sensor_config(Select_Address_x2);
+    Scan_Sensor_config(Select_Address_x3);
+    Scan_Sensor_config(Select_Address_x4);
+    Scan_Sensor_config(Select_Address_x5);
+    Scan_Sensor_config(Select_Address_x6);
+    Scan_Sensor_config(Select_Address_x7);
 
+//    memset(&JSN_SR20_revDef.JSN_SR20_pData, 0, sizeof(JSN_SR20_revDef.JSN_SR20_pData));
+//    memset(&GY301_revDef.GY301_pData, 0, sizeof(GY301_revDef.GY301_pData));
+//    memset(&GY53L1_revDef.GY53L1_pData, 0, sizeof(GY53L1_revDef.GY53L1_pData));
 
     while (1)
     {
-        SGM4581_Address_set(Select_Address_x6);
-        HAL_Delay(100);
-        HAL_UART_Transmit(&huart2, GY53L1_Buf_CMD, 3, 200);
-        HAL_Delay(100);
+        HAL_Delay_ms(100);
+        SGM4581_Address_set(Select_Address_x0);
+        HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd0, SenserLEN.channel_cmd0_len, 200);
+        HAL_Delay_ms(100);
 
-        SGM4581_Address_set(Select_Address_x5);
-        HAL_Delay(100);
-        HAL_UART_Transmit(&huart2, &JSN_SR20_CMD, 1, 200);
-        HAL_Delay(100);
+        SGM4581_Address_set(Select_Address_x1);
+        HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd1, SenserLEN.channel_cmd1_len, 200);
+        HAL_Delay_ms(100);
+
+
+        SGM4581_Address_set(Select_Address_x2);
+        HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd2, SenserLEN.channel_cmd2_len, 200);
+        HAL_Delay_ms(100);
+
+        SGM4581_Address_set(Select_Address_x3);
+        HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd3, SenserLEN.channel_cmd3_len, 200);
+        HAL_Delay_ms(100);
 
         SGM4581_Address_set(Select_Address_x4);
-        HAL_Delay(100);
-        HAL_UART_Transmit(&huart2, &GY301_CMD, 1, 200);
-        HAL_Delay(100);
+        HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd4, SenserLEN.channel_cmd4_len, 200);
+        HAL_Delay_ms(100);
+
+        SGM4581_Address_set(Select_Address_x5);
+        HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd5, SenserLEN.channel_cmd5_len, 200);
+        HAL_Delay_ms(100);
+
+        SGM4581_Address_set(Select_Address_x6);
+        HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd6, SenserLEN.channel_cmd6_len, 200);
+        HAL_Delay_ms(100);
+
+        SGM4581_Address_set(Select_Address_x7);
+        HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd7, SenserLEN.channel_cmd7_len, 200);
+        HAL_Delay_ms(100);
+
 
 
         for (uint8_t i = 0; i < GY53L1_RECEIVE_LEN; i++)
@@ -76,18 +373,7 @@ int main(void)
         RS485_TRANSMIT_MODE;
         HAL_Delay(10);
         HAL_UART_Transmit(&huart1, rs485_buf, 23, 200);
-        HAL_Delay(100);
-//        HAL_UART_Transmit(&huart1, GY53L1_revDef.GY53L1_pData, GY53L1_RECEIVE_LEN, 200);
-//        HAL_Delay(100);
-//
-//        HAL_UART_Transmit(&huart1, JSN_SR20_revDef.JSN_SR20_pData, SR20_RECEIVE_LEN, 200);
-//        HAL_Delay(100);
-//
-//        HAL_UART_Transmit(&huart1, GY301_revDef.GY301_pData, GY301_RECEIVE_LEN, 200);
-//        HAL_Delay(100);
         RS485_RECEIVE_MODE;
-
-        HAL_Delay(2000);
 
     }
 
