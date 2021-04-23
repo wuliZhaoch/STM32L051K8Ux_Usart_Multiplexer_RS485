@@ -14,8 +14,6 @@ uint8_t GY56_Buf_CMD[4] = {0xA5, 0x65, 0x02, 0x0C}; // GY56 Read Command
 
 
 
-
-
 uint8_t ODOA_Buff[2] = {0x0d,0x0a};
 
 uint8_t rs485_buf[23] = {0};
@@ -306,6 +304,7 @@ int main(void)
     MX_I2C1_Init();         // System IIC Initialize
     MX_TIM6_Init();         // System Timer Initialize (1S)
 
+    PackBuffer.counter_time = 0;
     Scan_Sensor_config(Select_Address_x0);
     Scan_Sensor_config(Select_Address_x1);
     Scan_Sensor_config(Select_Address_x2);
@@ -316,6 +315,7 @@ int main(void)
     Scan_Sensor_config(Select_Address_x7);
 
     memset(&USART2_ReceiveDef.Receive_pData, 0, sizeof(USART2_ReceiveDef.Receive_pData));
+    memset(&PackBuffer.channel_buffer, 0, sizeof(PackBuffer.channel_buffer));
     System_LED_Blink(20, 50);
 //    memset(&JSN_SR20_revDef.JSN_SR20_pData, 0, sizeof(JSN_SR20_revDef.JSN_SR20_pData));
 //    memset(&GY301_revDef.GY301_pData, 0, sizeof(GY301_revDef.GY301_pData));
@@ -357,20 +357,9 @@ int main(void)
         HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd7, SenserLEN.channel_cmd7_len, 200);
         HAL_Delay_ms(100);
 
+        PackBuffer.counter_time = 0;
+        memset(&PackBuffer.channel_buffer, 0, sizeof(PackBuffer.channel_buffer));
 
-
-        for (uint8_t i = 0; i < GY53L1_RECEIVE_LEN; i++)
-        {
-            rs485_buf[i] = GY53L1_revDef.GY53L1_pData[i];
-        }
-        for (uint8_t i = 0; i < SR20_RECEIVE_LEN; i++)
-        {
-            rs485_buf[i + GY53L1_RECEIVE_LEN] = JSN_SR20_revDef.JSN_SR20_pData[i];
-        }
-        for (uint8_t i = 0; i < GY301_RECEIVE_LEN; i++)
-        {
-            rs485_buf[i + GY53L1_RECEIVE_LEN + SR20_RECEIVE_LEN] = GY301_revDef.GY301_pData[i];
-        }
 
         RS485_TRANSMIT_MODE;
         HAL_Delay(10);

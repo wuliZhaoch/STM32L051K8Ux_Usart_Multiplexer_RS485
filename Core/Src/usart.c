@@ -49,6 +49,7 @@ GY53L1_ReceiveTypeDef GY53L1_revDef;
 Scan_SenserTypeDef SenserCMD;
 Scan_SenserLengthTypeDef SenserLEN;
 
+Scan_SenserBufferTypeDef PackBuffer;
 /* USART1 init function */
 
 void MX_USART1_UART_Init(void)

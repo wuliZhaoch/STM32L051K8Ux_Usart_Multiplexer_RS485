@@ -50,6 +50,9 @@ void MX_USART2_UART_Init(void);
 #define GY301_RECEIVE_LEN   11
 #define RS485_SEND_LEN      100
 
+#define CHANNEL_NUMBER          8
+#define PACKAGE_BUFFER_LEN      11
+
 typedef struct {
     uint8_t     Receive_Flag;     // IDLE Receive Flag
     uint16_t    Receive_LEN;        // Receive Length
@@ -112,6 +115,12 @@ typedef struct {
 }Scan_SenserLengthTypeDef;
 
 
+typedef struct {
+    uint8_t counter_time;
+    uint8_t channel_buffer[CHANNEL_NUMBER][PACKAGE_BUFFER_LEN];
+
+}Scan_SenserBufferTypeDef;
+
 extern Usart_ReceiveTypeDef USART1_ReceiveDef;
 extern Usart_ReceiveTypeDef USART2_ReceiveDef;
 
@@ -121,6 +130,8 @@ extern GY53L1_ReceiveTypeDef GY53L1_revDef;
 
 extern Scan_SenserTypeDef SenserCMD;
 extern Scan_SenserLengthTypeDef SenserLEN;
+
+extern Scan_SenserBufferTypeDef PackBuffer;
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

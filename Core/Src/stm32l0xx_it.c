@@ -67,6 +67,7 @@ extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 /* USER CODE BEGIN EV */
 
+extern uint8_t counter_time;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -300,8 +301,14 @@ void USART2_IRQHandler(void)
 
             }
 
-            memset(&USART2_ReceiveDef.Receive_pData, 0, sizeof(USART2_ReceiveDef.Receive_pData));
         }
+        for (uint8_t i = 0; i < PACKAGE_BUFFER_LEN; i++)
+        {
+            PackBuffer.channel_buffer[PackBuffer.counter_time][i] = USART2_ReceiveDef.Receive_pData[i];
+
+        }
+        PackBuffer.counter_time++;
+        memset(&USART2_ReceiveDef.Receive_pData, 0, sizeof(USART2_ReceiveDef.Receive_pData));
         HAL_UART_Receive_DMA(&huart2, USART2_ReceiveDef.Receive_pData, RECEIVE_LEN);
     }
   /* USER CODE END USART2_IRQn 0 */
