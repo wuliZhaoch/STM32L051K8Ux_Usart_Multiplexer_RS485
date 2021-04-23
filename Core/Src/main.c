@@ -315,6 +315,7 @@ int main(void)
     Scan_Sensor_config(Select_Address_x6);
     Scan_Sensor_config(Select_Address_x7);
 
+    memset(&USART2_ReceiveDef.Receive_pData, 0, sizeof(USART2_ReceiveDef.Receive_pData));
     System_LED_Blink(20, 50);
 //    memset(&JSN_SR20_revDef.JSN_SR20_pData, 0, sizeof(JSN_SR20_revDef.JSN_SR20_pData));
 //    memset(&GY301_revDef.GY301_pData, 0, sizeof(GY301_revDef.GY301_pData));
