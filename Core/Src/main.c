@@ -24,7 +24,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim == &htim6)
     {
-        HAL_GPIO_TogglePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin);
+//        HAL_GPIO_TogglePin(SYSTEM_LED_GPIO_Port, SYSTEM_LED_Pin);
 
     }
 }
@@ -315,6 +315,7 @@ int main(void)
     Scan_Sensor_config(Select_Address_x6);
     Scan_Sensor_config(Select_Address_x7);
 
+    System_LED_Blink(20, 50);
 //    memset(&JSN_SR20_revDef.JSN_SR20_pData, 0, sizeof(JSN_SR20_revDef.JSN_SR20_pData));
 //    memset(&GY301_revDef.GY301_pData, 0, sizeof(GY301_revDef.GY301_pData));
 //    memset(&GY53L1_revDef.GY53L1_pData, 0, sizeof(GY53L1_revDef.GY53L1_pData));

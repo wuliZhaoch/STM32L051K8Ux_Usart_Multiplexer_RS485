@@ -222,7 +222,7 @@ void USART1_IRQHandler(void)
     {
         __HAL_UART_CLEAR_IDLEFLAG(&huart1);
         HAL_UART_DMAStop(&huart1);
-        HAL_GPIO_TogglePin(GPIOA, SYSTEM_LED_Pin);
+//        HAL_GPIO_TogglePin(GPIOA, SYSTEM_LED_Pin);
         HAL_UART_Receive_DMA(&huart1, USART1_ReceiveDef.Receive_pData, RECEIVE_LEN);
     }
     /* USER CODE END USART1_IRQn 0 */
