@@ -397,6 +397,9 @@ int main(void)
     System_LED_Blink(20, 50);
     while (1)
     {
+        PackBuffer.counter_time = 0;
+        memset(&PackBuffer.channel_buffer, 0, sizeof(PackBuffer.channel_buffer));
+
         HAL_Delay_ms(100);
         SGM4581_Address_set(Select_Address_x0);
         HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd0, SenserLEN.channel_cmd0_len, 200);
@@ -429,9 +432,6 @@ int main(void)
         SGM4581_Address_set(Select_Address_x7);
         HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd7, SenserLEN.channel_cmd7_len, 200);
         HAL_Delay_ms(100);
-
-        PackBuffer.counter_time = 0;
-        memset(&PackBuffer.channel_buffer, 0, sizeof(PackBuffer.channel_buffer));
 
 
         RS485_TRANSMIT_MODE;
