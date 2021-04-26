@@ -62,6 +62,15 @@ void Scan_Sensor_config(uint8_t device_channel)
                 SenserCMD.channel_cmd0 = GY53L1_Buf_CMD;
                 SenserLEN.channel_cmd0_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
             }
+
+            HAL_UART_Transmit(&huart2, GY56_Buf_CMD, sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY56_revDef.GY56_Flag == 1)
+            {
+                GY56_revDef.GY56_Flag = 0;
+                SenserCMD.channel_cmd0 = GY56_Buf_CMD;
+                SenserLEN.channel_cmd0_len = sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]);
+            }
             break;
         case Select_Address_x1:
             SGM4581_Address_set(Select_Address_x1);
@@ -92,6 +101,15 @@ void Scan_Sensor_config(uint8_t device_channel)
                 GY53L1_revDef.GY53L1_Flag = 0;
                 SenserCMD.channel_cmd1 = GY53L1_Buf_CMD;
                 SenserLEN.channel_cmd1_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY56_Buf_CMD, sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY56_revDef.GY56_Flag == 1)
+            {
+                GY56_revDef.GY56_Flag = 0;
+                SenserCMD.channel_cmd1 = GY56_Buf_CMD;
+                SenserLEN.channel_cmd1_len = sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]);
             }
             break;
         case Select_Address_x2:
@@ -124,6 +142,15 @@ void Scan_Sensor_config(uint8_t device_channel)
                 SenserCMD.channel_cmd2 = GY53L1_Buf_CMD;
                 SenserLEN.channel_cmd2_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
             }
+
+            HAL_UART_Transmit(&huart2, GY56_Buf_CMD, sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY56_revDef.GY56_Flag == 1)
+            {
+                GY56_revDef.GY56_Flag = 0;
+                SenserCMD.channel_cmd2 = GY56_Buf_CMD;
+                SenserLEN.channel_cmd2_len = sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]);
+            }
             break;
         case Select_Address_x3:
             SGM4581_Address_set(Select_Address_x3);
@@ -154,6 +181,15 @@ void Scan_Sensor_config(uint8_t device_channel)
                 GY53L1_revDef.GY53L1_Flag = 0;
                 SenserCMD.channel_cmd3 = GY53L1_Buf_CMD;
                 SenserLEN.channel_cmd3_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY56_Buf_CMD, sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY56_revDef.GY56_Flag == 1)
+            {
+                GY56_revDef.GY56_Flag = 0;
+                SenserCMD.channel_cmd3 = GY56_Buf_CMD;
+                SenserLEN.channel_cmd3_len = sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]);
             }
             break;
         case Select_Address_x4:
@@ -186,6 +222,15 @@ void Scan_Sensor_config(uint8_t device_channel)
                 SenserCMD.channel_cmd4 = GY53L1_Buf_CMD;
                 SenserLEN.channel_cmd4_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
             }
+
+            HAL_UART_Transmit(&huart2, GY56_Buf_CMD, sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY56_revDef.GY56_Flag == 1)
+            {
+                GY56_revDef.GY56_Flag = 0;
+                SenserCMD.channel_cmd4 = GY56_Buf_CMD;
+                SenserLEN.channel_cmd4_len = sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]);
+            }
             break;
         case Select_Address_x5:
             SGM4581_Address_set(Select_Address_x5);
@@ -216,6 +261,15 @@ void Scan_Sensor_config(uint8_t device_channel)
                 GY53L1_revDef.GY53L1_Flag = 0;
                 SenserCMD.channel_cmd5 = GY53L1_Buf_CMD;
                 SenserLEN.channel_cmd5_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY56_Buf_CMD, sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY56_revDef.GY56_Flag == 1)
+            {
+                GY56_revDef.GY56_Flag = 0;
+                SenserCMD.channel_cmd5 = GY56_Buf_CMD;
+                SenserLEN.channel_cmd5_len = sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]);
             }
             break;
         case Select_Address_x6:
@@ -248,6 +302,15 @@ void Scan_Sensor_config(uint8_t device_channel)
                 SenserCMD.channel_cmd6 = GY53L1_Buf_CMD;
                 SenserLEN.channel_cmd6_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
             }
+
+            HAL_UART_Transmit(&huart2, GY56_Buf_CMD, sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY56_revDef.GY56_Flag == 1)
+            {
+                GY56_revDef.GY56_Flag = 0;
+                SenserCMD.channel_cmd6 = GY56_Buf_CMD;
+                SenserLEN.channel_cmd6_len = sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]);
+            }
             break;
         case Select_Address_x7:
             SGM4581_Address_set(Select_Address_x7);
@@ -278,6 +341,15 @@ void Scan_Sensor_config(uint8_t device_channel)
                 GY53L1_revDef.GY53L1_Flag = 0;
                 SenserCMD.channel_cmd7 = GY53L1_Buf_CMD;
                 SenserLEN.channel_cmd7_len = sizeof(GY53L1_Buf_CMD)/sizeof(GY53L1_Buf_CMD[0]);
+            }
+
+            HAL_UART_Transmit(&huart2, GY56_Buf_CMD, sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]), 200);
+            HAL_Delay(CMD_DELAY);
+            if (GY56_revDef.GY56_Flag == 1)
+            {
+                GY56_revDef.GY56_Flag = 0;
+                SenserCMD.channel_cmd7 = GY56_Buf_CMD;
+                SenserLEN.channel_cmd7_len = sizeof(GY56_Buf_CMD)/sizeof(GY56_Buf_CMD[0]);
             }
             break;
     }
