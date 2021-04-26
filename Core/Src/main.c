@@ -388,11 +388,13 @@ int main(void)
 
     memset(&USART2_ReceiveDef.Receive_pData, 0, sizeof(USART2_ReceiveDef.Receive_pData));
     memset(&PackBuffer.channel_buffer, 0, sizeof(PackBuffer.channel_buffer));
-    System_LED_Blink(20, 50);
-//    memset(&JSN_SR20_revDef.JSN_SR20_pData, 0, sizeof(JSN_SR20_revDef.JSN_SR20_pData));
-//    memset(&GY301_revDef.GY301_pData, 0, sizeof(GY301_revDef.GY301_pData));
-//    memset(&GY53L1_revDef.GY53L1_pData, 0, sizeof(GY53L1_revDef.GY53L1_pData));
 
+    memset(&JSN_SR20_revDef.JSN_SR20_pData, 0, sizeof(JSN_SR20_revDef.JSN_SR20_pData));
+    memset(&GY301_revDef.GY301_pData, 0, sizeof(GY301_revDef.GY301_pData));
+    memset(&GY53L1_revDef.GY53L1_pData, 0, sizeof(GY53L1_revDef.GY53L1_pData));
+    memset(&GY56_revDef.GY56_pData, 0, sizeof(GY56_revDef.GY56_pData));
+
+    System_LED_Blink(20, 50);
     while (1)
     {
         HAL_Delay_ms(100);
@@ -403,7 +405,6 @@ int main(void)
         SGM4581_Address_set(Select_Address_x1);
         HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd1, SenserLEN.channel_cmd1_len, 200);
         HAL_Delay_ms(100);
-
 
         SGM4581_Address_set(Select_Address_x2);
         HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd2, SenserLEN.channel_cmd2_len, 200);

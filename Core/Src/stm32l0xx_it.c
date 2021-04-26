@@ -327,7 +327,6 @@ void USART2_IRQHandler(void)
         for (uint8_t i = 0; i < PACKAGE_BUFFER_LEN; i++)
         {
             PackBuffer.channel_buffer[PackBuffer.counter_time][i] = USART2_ReceiveDef.Receive_pData[i];
-
         }
         PackBuffer.counter_time++;
         memset(&USART2_ReceiveDef.Receive_pData, 0, sizeof(USART2_ReceiveDef.Receive_pData));
