@@ -46,7 +46,7 @@ void MX_USART2_UART_Init(void);
 #define RECEIVE_LEN         255
 #define SR20_RECEIVE_LEN    4
 #define GY53L1_RECEIVE_LEN  8
-#define GY56_RECEIVE_LEN    8
+#define GY56_RECEIVE_LEN    9
 #define GY301_RECEIVE_LEN   11
 #define RS485_SEND_LEN      100
 
@@ -127,6 +127,7 @@ extern Usart_ReceiveTypeDef USART2_ReceiveDef;
 extern JSN_SR20ReceiveTypeDef JSN_SR20_revDef;
 extern GY301_ReceiveTypeDef GY301_revDef;
 extern GY53L1_ReceiveTypeDef GY53L1_revDef;
+extern GY56_ReceiveTypeDef GY56_revDef;
 
 extern Scan_SenserTypeDef SenserCMD;
 extern Scan_SenserLengthTypeDef SenserLEN;

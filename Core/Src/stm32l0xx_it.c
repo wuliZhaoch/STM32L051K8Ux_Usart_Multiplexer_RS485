@@ -249,6 +249,28 @@ void USART2_IRQHandler(void)
         USART2_ReceiveDef.Receive_LEN = RECEIVE_LEN - Counter;
         if (USART2_ReceiveDef.Receive_LEN > 0)
         {
+            /*  红外测距接收数据处理 (GY-56)Infrared ranging receiving data processing */
+            if ((USART2_ReceiveDef.Receive_pData[0] == 0x5A)
+                && (USART2_ReceiveDef.Receive_pData[1] == 0x5A)
+                && (USART2_ReceiveDef.Receive_pData[2] == 0x15)
+                && (USART2_ReceiveDef.Receive_pData[3] == 0x04)
+                && ((uint8_t) ((USART2_ReceiveDef.Receive_pData[0]
+                + USART2_ReceiveDef.Receive_pData[1]
+                + USART2_ReceiveDef.Receive_pData[2]
+                + USART2_ReceiveDef.Receive_pData[3]
+                + USART2_ReceiveDef.Receive_pData[4]
+                + USART2_ReceiveDef.Receive_pData[5]
+                + USART2_ReceiveDef.Receive_pData[6]
+                + USART2_ReceiveDef.Receive_pData[7]))
+                == USART2_ReceiveDef.Receive_pData[8])) {
+
+                GY56_revDef.GY56_Flag = 1;
+
+                memset(&GY56_revDef.GY56_pData, 0, sizeof(GY56_revDef.GY56_pData));
+                GY56_revDef.GY56_LEN = USART2_ReceiveDef.Receive_LEN;
+                memcpy(GY56_revDef.GY56_pData, USART2_ReceiveDef.Receive_pData, GY56_revDef.GY56_LEN);
+
+            }
 
             /* 超声波测距接收数据处理 Ultrasonic ranging receiving data processing */
             if ((USART2_ReceiveDef.Receive_pData[0] == 0xFF)
@@ -279,19 +301,19 @@ void USART2_IRQHandler(void)
 
             }
 
-            /* 红外测距接收数据处理 Infrared ranging receiving data processing */
+            /*  红外测距接收数据处理 (GY-53L1)Infrared ranging receiving data processing */
             if ((USART2_ReceiveDef.Receive_pData[0] == 0x5A)
-                    && (USART2_ReceiveDef.Receive_pData[1] == 0x5A)
-                    && (USART2_ReceiveDef.Receive_pData[2] == 0x15)
-                    && (USART2_ReceiveDef.Receive_pData[3] == 0x03)
-                    && ((uint8_t) ((USART2_ReceiveDef.Receive_pData[0]
-                    + USART2_ReceiveDef.Receive_pData[1]
-                    + USART2_ReceiveDef.Receive_pData[2]
-                    + USART2_ReceiveDef.Receive_pData[3]
-                    + USART2_ReceiveDef.Receive_pData[4]
-                    + USART2_ReceiveDef.Receive_pData[5]
-                    + USART2_ReceiveDef.Receive_pData[6]))
-                    == USART2_ReceiveDef.Receive_pData[7])) {
+                && (USART2_ReceiveDef.Receive_pData[1] == 0x5A)
+                && (USART2_ReceiveDef.Receive_pData[2] == 0x15)
+                && (USART2_ReceiveDef.Receive_pData[3] == 0x03)
+                && ((uint8_t) ((USART2_ReceiveDef.Receive_pData[0]
+                + USART2_ReceiveDef.Receive_pData[1]
+                + USART2_ReceiveDef.Receive_pData[2]
+                + USART2_ReceiveDef.Receive_pData[3]
+                + USART2_ReceiveDef.Receive_pData[4]
+                + USART2_ReceiveDef.Receive_pData[5]
+                + USART2_ReceiveDef.Receive_pData[6]))
+                == USART2_ReceiveDef.Receive_pData[7])) {
 
                 GY53L1_revDef.GY53L1_Flag = 1;
 

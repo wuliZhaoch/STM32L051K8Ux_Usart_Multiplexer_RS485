@@ -45,6 +45,7 @@ Usart_ReceiveTypeDef USART2_ReceiveDef;
 JSN_SR20ReceiveTypeDef JSN_SR20_revDef;
 GY301_ReceiveTypeDef GY301_revDef;
 GY53L1_ReceiveTypeDef GY53L1_revDef;
+GY56_ReceiveTypeDef GY56_revDef;
 
 Scan_SenserTypeDef SenserCMD;
 Scan_SenserLengthTypeDef SenserLEN;
