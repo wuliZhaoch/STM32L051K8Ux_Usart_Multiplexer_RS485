@@ -17,7 +17,7 @@ uint8_t rs485_buff[40] = {0};
 uint32_t main_loop = 0;
 //uint8_t rs485_time = 0;
 
-//uint8_t RS485_Send_buffer[5] = {0x12, 0x55, 0xff, 0x12, 0x55};
+uint8_t RS485_Send_buffer[44] = {0};
 
 uint8_t JSN_SR20_Buf_CMD[1] = {0x55};               // JSN_SR20 Read Command
 uint8_t GY301_Buf_CMD[1] = {0xAA};                  // GY301 Read Command
@@ -85,7 +85,7 @@ int main(void)
         PackBuffer.counter_time = 0;
         memset(&PackBuffer.channel_buffer, 0, sizeof(PackBuffer.channel_buffer));
 
-        HAL_Delay_ms(100);
+//        HAL_Delay_ms(100);
         SGM4581_Address_set(Select_Address_x0);
         HAL_UART_Transmit(&huart2, SenserCMD.channel_cmd0, SenserLEN.channel_cmd0_len, 200);
         HAL_Delay_ms(100);
@@ -131,10 +131,21 @@ int main(void)
 //        rs485_time = 0;
 
         SensorDataBit_Package(rs485_buff);    // Sensor data valid bit set package
-        uint16_t crc_check = GetCRC16(rs485_buff, 19);
+
+        RS485_Send_buffer[0] = RS485_ADDRESS_CODE;
+        RS485_Send_buffer[1] = RS485_FUNCTION_CODE;
+        for (uint8_t i = 0; i < 40; i++)
+        {
+            RS485_Send_buffer[i+2] = rs485_buff[i];
+        }
+        uint16_t crc_check = GetCRC16(RS485_Send_buffer, 42);
+        RS485_Send_buffer[42] = (crc_check >> 8) & 0xFF;
+        RS485_Send_buffer[43] = crc_check & 0xFF;
+
+
         RS485_TRANSMIT_MODE;    // Turn on RS485 transmission mode
         HAL_Delay(10);
-        HAL_UART_Transmit(&huart1, rs485_buff, 40, 200);    // Send rs485_buff[] Data
+        HAL_UART_Transmit(&huart1, RS485_Send_buffer, 44, 200);    // Send rs485_buff[] Data
         RS485_RECEIVE_MODE;    // Turn on RS485 receiving mode
 
     }
