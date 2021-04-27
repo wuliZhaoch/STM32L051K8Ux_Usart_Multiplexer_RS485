@@ -272,7 +272,7 @@ void USART2_IRQHandler(void)
 
             }
 
-            /* 超声波测距接收数据处理 Ultrasonic ranging receiving data processing */
+            /* 超声波测距接收数据处理 (JSN-SR20-Y1) Ultrasonic ranging receiving data processing */
             if ((USART2_ReceiveDef.Receive_pData[0] == 0xFF)
                     && ((uint8_t)(USART2_ReceiveDef.Receive_pData[0] + USART2_ReceiveDef.Receive_pData[1]
                             + USART2_ReceiveDef.Receive_pData[2])
