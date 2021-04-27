@@ -131,6 +131,7 @@ int main(void)
 //        rs485_time = 0;
 
         SensorDataBit_Package(rs485_buff);    // Sensor data valid bit set package
+        uint16_t crc_check = GetCRC16(rs485_buff, 19);
         RS485_TRANSMIT_MODE;    // Turn on RS485 transmission mode
         HAL_Delay(10);
         HAL_UART_Transmit(&huart1, rs485_buff, 40, 200);    // Send rs485_buff[] Data
